@@ -7,7 +7,7 @@
   <style>
     :root {
       --bg-deep: #06070b;
-      --bg-panel: rgba(14, 17, 26, 0.88);
+      --bg-panel: rgba(14, 17, 26, 0.9);
       --bg-card: rgba(25, 30, 45, 0.65);
       --border-glass: rgba(255, 255, 255, 0.09);
       --text-main: #f3f6ff;
@@ -63,13 +63,13 @@
       gap: 10px;
       font-weight: 800;
       letter-spacing: 0.8px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       white-space: nowrap;
     }
 
     .brand-dot {
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
       box-shadow: 0 0 12px var(--accent-cyan);
@@ -92,9 +92,9 @@
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border-glass);
       color: var(--text-main);
-      padding: 7px 12px;
+      padding: 6px 11px;
       border-radius: 9px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -129,7 +129,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      padding: 14px;
+      padding: 12px;
       overflow: hidden;
       background:
         radial-gradient(circle at center, rgba(0, 240, 255, 0.04) 0%, transparent 65%),
@@ -194,22 +194,22 @@
     }
 
     .start-badge {
-      padding: 16px 28px;
+      padding: 15px 26px;
       border-radius: 99px;
       background: linear-gradient(135deg, rgba(0, 240, 255, 0.18), rgba(255, 42, 133, 0.18));
       border: 1px solid rgba(0, 240, 255, 0.55);
       box-shadow: 0 0 35px rgba(0, 240, 255, 0.25), inset 0 0 18px rgba(255, 42, 133, 0.15);
       color: #ffffff;
       font-weight: 800;
-      font-size: 0.95rem;
-      letter-spacing: 1.4px;
+      font-size: 0.92rem;
+      letter-spacing: 1.3px;
       text-transform: uppercase;
       animation: pulseBadge 1.8s infinite ease-in-out;
     }
 
     .start-sub {
-      margin-top: 12px;
-      font-size: 0.76rem;
+      margin-top: 10px;
+      font-size: 0.75rem;
       color: var(--text-muted);
       letter-spacing: 0.4px;
     }
@@ -221,49 +221,62 @@
 
     /* Control Sidebar */
     .control-panel {
-      width: 310px;
+      width: 290px;
       background: var(--bg-panel);
       -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       border-left: 1px solid var(--border-glass);
-      padding: 18px;
-      overflow-y: auto;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
       z-index: 15;
     }
 
-    .panel-header {
-      border-bottom: 1px solid var(--border-glass);
-      padding-bottom: 12px;
+    /* Action Buttons on Top */
+    .btn-row {
+      display: flex;
+      gap: 8px;
     }
 
-    .panel-title {
-      font-size: 0.95rem;
-      font-weight: 700;
+    .action-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.22), rgba(0, 140, 255, 0.2));
       color: #fff;
-      margin-bottom: 4px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    .panel-subtitle {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      line-height: 1.4;
+    .action-btn:hover {
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+    }
+
+    .action-btn.secondary {
+      border-color: rgba(255, 42, 133, 0.45);
+      background: linear-gradient(135deg, rgba(255, 42, 133, 0.22), rgba(157, 78, 221, 0.2));
+    }
+
+    .action-btn.secondary:hover {
+      box-shadow: 0 0 16px rgba(255, 42, 133, 0.35);
     }
 
     .control-section {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: 12px;
-      padding: 14px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .section-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.9px;
@@ -277,7 +290,7 @@
       justify-content: space-between;
       gap: 10px;
       cursor: pointer;
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       font-weight: 500;
       color: #dce4f7;
     }
@@ -286,7 +299,7 @@
 
     .switch {
       position: relative;
-      width: 42px;
+      width: 40px;
       height: 22px;
       flex-shrink: 0;
     }
@@ -322,28 +335,29 @@
     }
 
     .switch input:checked + .slider-toggle:before {
-      transform: translateX(20px);
+      transform: translateX(18px);
       background-color: #05070c;
     }
 
-    /* Theme Pill Buttons */
+    /* 3 Single-Row Theme Pill Buttons */
     .pill-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
     }
 
     .pill-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-glass);
       color: var(--text-muted);
-      padding: 8px 10px;
+      padding: 8px 6px;
       border-radius: 8px;
       font-size: 0.76rem;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
       transition: all 0.18s ease;
+      white-space: nowrap;
     }
 
     .pill-btn:hover {
@@ -358,49 +372,25 @@
       box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
     }
 
-    /* Action Buttons */
-    .btn-row { display: flex; gap: 8px; margin-top: auto; }
-
-    .action-btn {
-      flex: 1;
-      padding: 11px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(0, 240, 255, 0.4);
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 140, 255, 0.2));
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .action-btn:hover {
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
-    }
-
-    .action-btn.secondary {
-      border-color: rgba(255, 42, 133, 0.45);
-      background: linear-gradient(135deg, rgba(255, 42, 133, 0.2), rgba(157, 78, 221, 0.2));
-    }
-
-    .action-btn.secondary:hover {
-      box-shadow: 0 0 16px rgba(255, 42, 133, 0.3);
-    }
-
-    /* Mobile Portrait Responsive Layout */
+    /* Mobile Portrait Responsive Layout (72%+ Canvas Height) */
     @media (max-width: 860px) {
       .workspace { flex-direction: column; }
       .stage-container { flex: 1; padding: 8px; }
       .control-panel {
         width: 100%;
         height: auto;
-        max-height: 42vh;
         border-left: none;
         border-top: 1px solid var(--border-glass);
-        padding: 14px;
-        gap: 12px;
+        padding: 10px 12px 12px;
+        gap: 8px;
       }
-      .panel-header { display: none; }
+      .control-section {
+        padding: 9px 12px;
+        gap: 7px;
+      }
+      .action-btn {
+        padding: 8px 10px;
+      }
       .top-bar { padding: 8px 12px; }
     }
   </style>
@@ -415,7 +405,7 @@
       </div>
 
       <div class="top-actions">
-        <button class="icon-btn" id="aspectBtn">📱 9:16 Reels Frame</button>
+        <button class="icon-btn" id="aspectBtn">📱 9:16 Reels</button>
         <button class="icon-btn active" id="soundBtn">🔊 Audio: ON</button>
       </div>
     </header>
@@ -429,18 +419,20 @@
           <!-- Tap Anywhere Overlay -->
           <div class="start-overlay" id="startOverlay">
             <div class="start-badge">⚡ Tap Anywhere to Start Brainrot</div>
-            <div class="start-sub">Unlocks procedural synth audio &amp; physics loop</div>
+            <div class="start-sub">Unlocks synth audio &amp; autonomous physics</div>
           </div>
         </div>
       </div>
 
-      <!-- Streamlined Controls Sidebar -->
+      <!-- Compact Controls Sidebar -->
       <aside class="control-panel">
-        <div class="panel-header">
-          <div class="panel-title">🌀 Viral Hook Rules</div>
-          <div class="panel-subtitle">Mix &amp; match the 4 classic TikTok simulation rules in real time.</div>
+        <!-- Quick Actions at the Top -->
+        <div class="btn-row">
+          <button class="action-btn" id="ringResetBtn">🔄 Restart</button>
+          <button class="action-btn secondary" id="ringChaosBtn">🔥 Chaos</button>
         </div>
 
+        <!-- 3 Core Rules -->
         <div class="control-section">
           <div class="section-label">Simulation Rules</div>
           <label class="toggle-row">
@@ -452,28 +444,19 @@
             <div class="switch"><input type="checkbox" id="ringGrow" /><span class="slider-toggle"></span></div>
           </label>
           <label class="toggle-row">
-            <span>🔨 Crack Rings on Hit</span>
-            <div class="switch"><input type="checkbox" id="ringBatter" checked /><span class="slider-toggle"></span></div>
-          </label>
-          <label class="toggle-row">
             <span>⚡ Hyper-Speed Bounce</span>
             <div class="switch"><input type="checkbox" id="ringSpeedUp" /><span class="slider-toggle"></span></div>
           </label>
         </div>
 
+        <!-- 3 Single-Line Visual Palettes -->
         <div class="control-section">
           <div class="section-label">Visual Palette</div>
           <div class="pill-grid" id="ringThemeGroup">
-            <button class="pill-btn active" data-theme="cyberpunk">Cyberpunk</button>
+            <button class="pill-btn active" data-theme="cyberpunk">Cyber</button>
             <button class="pill-btn" data-theme="rainbow">Rainbow</button>
-            <button class="pill-btn" data-theme="gold">Molten Gold</button>
-            <button class="pill-btn" data-theme="matrix">Neon Matrix</button>
+            <button class="pill-btn" data-theme="gold">Gold</button>
           </div>
-        </div>
-
-        <div class="btn-row">
-          <button class="action-btn" id="ringResetBtn">🔄 Restart Loop</button>
-          <button class="action-btn secondary" id="ringChaosBtn">🔥 All Rules ON</button>
         </div>
       </aside>
     </div>
@@ -517,7 +500,7 @@
         const gain = this.ctx.createGain();
 
         const freq = this.scale[this.scaleIndex++ % this.scale.length];
-        osc.frequency.setValueAtTime(freq / Math.max(0.6, Math.min(1.8, sizeRatio * 0.7)), t);
+        osc.frequency.setValueAtTime(freq / Math.max(0.6, Math.min(1.75, sizeRatio * 0.65)), t);
         osc.type = 'triangle';
 
         gain.gain.setValueAtTime(0.11, t);
@@ -528,20 +511,22 @@
         osc.stop(t + 0.13);
       }
 
-      playShatter() {
-        if (!this.canPlay(55)) return;
+      playShatter(ringIndex = 0, totalRings = 12) {
+        if (!this.canPlay(50)) return;
         const t = this.ctx.currentTime;
+        // Pitch rises progressively as outer rings shatter
+        const pitchMult = 0.85 + (ringIndex / Math.max(1, totalRings - 1)) * 0.65;
         [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, t + i * 0.024);
-          gain.gain.setValueAtTime(0.075, t + i * 0.024);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.024 + 0.2);
+          osc.frequency.setValueAtTime(freq * pitchMult, t + i * 0.022);
+          gain.gain.setValueAtTime(0.075, t + i * 0.022);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.022 + 0.2);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-          osc.start(t + i * 0.024);
-          osc.stop(t + i * 0.024 + 0.2);
+          osc.start(t + i * 0.022);
+          osc.stop(t + i * 0.022 + 0.2);
         });
       }
     }
@@ -567,10 +552,10 @@
     const particles = [];
 
     function addShake(amt) {
-      shakeIntensity = Math.min(10, shakeIntensity + amt);
+      shakeIntensity = Math.min(9, shakeIntensity + amt);
     }
 
-    function spawnParticles(x, y, color, count = 3, speed = 2.2, size = 1.6, decay = 0.055) {
+    function spawnParticles(x, y, color, count = 3, speed = 2.0, size = 1.5, decay = 0.06) {
       if (particles.length > 320) particles.splice(0, count);
       for (let i = 0; i < count; i++) {
         const a = Math.random() * Math.PI * 2;
@@ -620,7 +605,6 @@
     const ringConfig = {
       multiplyOnEscape: true,
       growOnBounce: false,
-      batterRing: true,
       speedUp: false,
       numRings: 12,
       gapDeg: 34,
@@ -631,8 +615,7 @@
     const ringThemes = {
       cyberpunk: ['#00f0ff', '#ff2a85', '#9d4edd', '#00f59b', '#ffbe0b'],
       rainbow: ['#ff3366', '#ff9933', '#ffee33', '#33ff77', '#33ccff', '#9966ff'],
-      gold: ['#fff3b0', '#ffbe0b', '#fb5607', '#e09f3e', '#ffd166'],
-      matrix: ['#00f59b', '#00ff66', '#38b000', '#70e000', '#9ef01a']
+      gold: ['#fff3b0', '#ffbe0b', '#fb5607', '#e09f3e', '#ffd166']
     };
 
     let rings = [];
@@ -644,6 +627,7 @@
       ringBalls = [];
       particles.length = 0;
       ringAutoResetTimer = 0;
+      sfx.scaleIndex = 0;
 
       const minDim = Math.min(W, H);
       const count = ringConfig.numRings;
@@ -656,13 +640,13 @@
       for (let i = 0; i < count; i++) {
         const dir = i % 2 === 0 ? 1 : -1;
         rings.push({
+          index: i,
           radius: minR + i * stepR,
           angle: (i * 0.45) % (Math.PI * 2),
           gapSize: gapRad,
           rotSpeed: dir * (0.013 + i * 0.0015),
           color: palette[i % palette.length],
           broken: false,
-          hp: 10 + i * 2,
           flash: 0
         });
       }
@@ -683,8 +667,8 @@
     function shatterRingObj(ring, cx, cy) {
       if (ring.broken) return;
       ring.broken = true;
-      sfx.playShatter();
-      addShake(3.5);
+      sfx.playShatter(ring.index, rings.length);
+      addShake(3.2);
 
       const segs = 28;
       for (let i = 0; i < segs; i++) {
@@ -695,12 +679,30 @@
           y: cy + Math.sin(a) * ring.radius,
           vx: Math.cos(a) * (1.5 + Math.random() * 2.5),
           vy: Math.sin(a) * (1.5 + Math.random() * 2.5),
-          r: 2.5,
+          r: 2.4,
           color: ring.color,
           alpha: 0.95,
           decay: 0.032
         });
       }
+    }
+
+    function applyBounceBoostAndEffects(b, ring, hitX, hitY) {
+      const boost = ringConfig.speedUp ? 1.035 : 1.003;
+      const spd = Math.min(14.5, Math.max(5.2, Math.hypot(b.vx, b.vy) * boost));
+      const ca = Math.atan2(b.vy, b.vx);
+      b.vx = Math.cos(ca) * spd;
+      b.vy = Math.sin(ca) * spd;
+
+      if (ringConfig.growOnBounce) {
+        // Cap ball size to 58% of current ring so it still moves and can hit the gap middle
+        b.r = Math.min(ring.radius * 0.58, b.r * 1.03 + 0.18);
+      }
+
+      ring.flash = 1;
+      b.color = ring.color;
+      spawnParticles(hitX, hitY, ring.color, 3, 1.9, 1.5, 0.065);
+      sfx.playBounce(b.r / 10);
     }
 
     function updateAndDrawRings(dt) {
@@ -767,12 +769,11 @@
         if (b.ringIdx < rings.length) {
           const ring = rings[b.ringIdx];
           if (dist + b.r >= ring.radius) {
-            const diff = Math.abs(normalizeAngle(Math.atan2(dy, dx) - ring.angle));
-            const angularBallRadius = Math.asin(Math.min(0.95, b.r / ring.radius));
-            const effectiveHalfGap = ring.gapSize * 0.5 - angularBallRadius * 0.65;
+            const ballAngle = Math.atan2(dy, dx);
+            const diff = Math.abs(normalizeAngle(ballAngle - ring.angle));
 
-            // Escape through gap if ball fits
-            if (diff < effectiveHalfGap) {
+            // 1. Reasonable Middle of Gap -> Clean Escape & Shatter (even for overgrown balls)
+            if (diff < ring.gapSize * 0.43) {
               b.ringIdx++;
               b.color = ring.color;
               shatterRingObj(ring, cx, cy);
@@ -791,8 +792,39 @@
                   ringIdx: b.ringIdx
                 });
               }
-            } else {
-              // Bounce off ring interior
+            }
+            // 2. Near-Miss on Gap Lip -> Edge Tip Ricochet
+            else if (diff < ring.gapSize * 0.54) {
+              const lipSign = normalizeAngle(ballAngle - ring.angle) >= 0 ? 1 : -1;
+              const lipAngle = ring.angle + lipSign * (ring.gapSize * 0.5);
+              const lipX = cx + Math.cos(lipAngle) * ring.radius;
+              const lipY = cy + Math.sin(lipAngle) * ring.radius;
+
+              let lx = b.x - lipX;
+              let ly = b.y - lipY;
+              const lDist = Math.hypot(lx, ly) || 0.0001;
+              lx /= lDist;
+              ly /= lDist;
+
+              // Ensure ball bounces back inside the ring arena
+              if (lx * dx + ly * dy > 0) {
+                lx = -dx / dist;
+                ly = -dy / dist;
+              }
+
+              const overlap = (dist + b.r) - ring.radius;
+              b.x -= (dx / dist) * (overlap + 1);
+              b.y -= (dy / dist) * (overlap + 1);
+
+              const dot = b.vx * lx + b.vy * ly;
+              if (dot < 0) {
+                b.vx -= 2 * dot * lx;
+                b.vy -= 2 * dot * ly;
+              }
+              applyBounceBoostAndEffects(b, ring, lipX, lipY);
+            }
+            // 3. Solid Ring Interior Wall Bounce (Never shatters ring)
+            else {
               const nx = dx / dist;
               const ny = dy / dist;
               const overlap = (dist + b.r) - ring.radius;
@@ -807,31 +839,13 @@
               b.vx += -ny * ring.rotSpeed * 11;
               b.vy += nx * ring.rotSpeed * 11;
 
-              const boost = ringConfig.speedUp ? 1.035 : 1.004;
-              const spd = Math.min(14.5, Math.max(5.2, Math.hypot(b.vx, b.vy) * boost));
-              const ca = Math.atan2(b.vy, b.vx);
-              b.vx = Math.cos(ca) * spd;
-              b.vy = Math.sin(ca) * spd;
-
-              if (ringConfig.growOnBounce) {
-                b.r = Math.min(ring.radius * 0.55, b.r * 1.032 + 0.2);
-              }
-
-              // Subtle flash & micro-splash
-              ring.flash = 1;
-              b.color = ring.color;
-              spawnParticles(b.x + nx * b.r, b.y + ny * b.r, ring.color, 3, 2.0, 1.5, 0.06);
-              sfx.playBounce(b.r / 10);
-
-              if (ringConfig.batterRing || b.r >= ring.radius * 0.48) {
-                ring.hp -= ringConfig.growOnBounce ? 2.2 : 1;
-                if (ring.hp <= 0 || b.r >= ring.radius * 0.48) {
-                  shatterRingObj(ring, cx, cy);
-                }
-              }
+              applyBounceBoostAndEffects(b, ring, b.x + nx * b.r, b.y + ny * b.r);
             }
           }
         } else {
+          // Gentle float & boundary bounce once all rings are cleared
+          b.vx -= dx * 0.0003 * dt;
+          b.vy -= dy * 0.0003 * dt;
           if (b.x < b.r || b.x > W - b.r) b.vx *= -0.9;
           if (b.y < b.r || b.y > H - b.r) b.vy *= -0.9;
         }
@@ -865,7 +879,7 @@
       // Seamless Auto-Restart when all rings are cleared
       if (activeRingsCount === 0 || ringBalls.every(b => b.ringIdx >= rings.length)) {
         ringAutoResetTimer += dt;
-        if (ringAutoResetTimer >= 70) {
+        if (ringAutoResetTimer >= 65) {
           initRingsMode();
         }
       }
@@ -875,8 +889,8 @@
     function resizeCanvas() {
       const rect = document.getElementById('canvasFrame').getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const newW = Math.max(280, Math.floor(rect.width));
-      const newH = Math.max(280, Math.floor(rect.height));
+      const newW = Math.max(260, Math.floor(rect.width));
+      const newH = Math.max(260, Math.floor(rect.height));
       if (Math.abs(newW - W) < 4 && Math.abs(newH - H) < 4 && rings.length > 0) return;
 
       W = newW;
@@ -895,7 +909,7 @@
       frame.classList.toggle('reels-frame');
       const isReels = frame.classList.contains('reels-frame');
       e.target.classList.toggle('active', isReels);
-      e.target.textContent = isReels ? '🖥️ Full Canvas' : '📱 9:16 Reels Frame';
+      e.target.textContent = isReels ? '🖥️ Full' : '📱 9:16 Reels';
     });
 
     document.getElementById('soundBtn').addEventListener('click', e => {
@@ -905,13 +919,12 @@
       e.target.textContent = sfx.enabled ? '🔊 Audio: ON' : '🔇 Audio: OFF';
     });
 
-    // Core 4 Viral Rule Toggles
+    // Core 3 Viral Rule Toggles
     document.getElementById('ringMultiply').addEventListener('change', e => ringConfig.multiplyOnEscape = e.target.checked);
     document.getElementById('ringGrow').addEventListener('change', e => ringConfig.growOnBounce = e.target.checked);
-    document.getElementById('ringBatter').addEventListener('change', e => ringConfig.batterRing = e.target.checked);
     document.getElementById('ringSpeedUp').addEventListener('change', e => ringConfig.speedUp = e.target.checked);
 
-    // Themes
+    // 3 Single-Row Themes
     document.querySelectorAll('#ringThemeGroup .pill-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('#ringThemeGroup .pill-btn').forEach(b => b.classList.remove('active'));
@@ -928,13 +941,12 @@
     });
 
     document.getElementById('ringChaosBtn').addEventListener('click', () => {
-      ['ringMultiply', 'ringGrow', 'ringBatter', 'ringSpeedUp'].forEach(id => {
+      ['ringMultiply', 'ringGrow', 'ringSpeedUp'].forEach(id => {
         document.getElementById(id).checked = true;
       });
       Object.assign(ringConfig, {
         multiplyOnEscape: true,
         growOnBounce: true,
-        batterRing: true,
         speedUp: true
       });
       startBrainrot();
