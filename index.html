@@ -7,7 +7,7 @@
   <style>
     :root {
       --bg-deep: #06070b;
-      --bg-panel: rgba(14, 17, 26, 0.86);
+      --bg-panel: rgba(14, 17, 26, 0.88);
       --bg-card: rgba(25, 30, 45, 0.65);
       --border-glass: rgba(255, 255, 255, 0.09);
       --text-main: #f3f6ff;
@@ -15,7 +15,6 @@
       --accent-cyan: #00f0ff;
       --accent-pink: #ff2a85;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
     }
 
     * {
@@ -24,6 +23,7 @@
       padding: 0;
       -webkit-user-select: none;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html, body {
@@ -169,83 +169,74 @@
       display: block;
     }
 
-    /* HUD Overlays */
-    .hud-top {
+    /* Start Brainrot Overlay */
+    .start-overlay {
       position: absolute;
-      top: 14px;
-      left: 14px;
-      right: 14px;
+      inset: 0;
+      background: rgba(5, 6, 10, 0.65);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      pointer-events: none;
-      gap: 10px;
-      z-index: 5;
-    }
-
-    .hud-pill {
-      background: rgba(8, 10, 16, 0.76);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 7px 12px;
-      border-radius: 10px;
-      font-size: 0.78rem;
-      font-family: var(--font-mono);
-      color: var(--text-main);
-      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      z-index: 30;
+      cursor: pointer;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+      padding: 20px;
+      text-align: center;
     }
 
-    .hud-stat span {
-      color: var(--accent-cyan);
-      font-weight: 700;
-    }
-
-    .hud-bottom-hint {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(10, 13, 22, 0.82);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 6px 14px;
-      border-radius: 99px;
-      font-size: 0.75rem;
-      color: #c5d1eb;
+    .start-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      white-space: nowrap;
-      z-index: 5;
+    }
+
+    .start-badge {
+      padding: 16px 28px;
+      border-radius: 99px;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.18), rgba(255, 42, 133, 0.18));
+      border: 1px solid rgba(0, 240, 255, 0.55);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.25), inset 0 0 18px rgba(255, 42, 133, 0.15);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      animation: pulseBadge 1.8s infinite ease-in-out;
+    }
+
+    .start-sub {
+      margin-top: 12px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 0.4px;
+    }
+
+    @keyframes pulseBadge {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(0, 240, 255, 0.25); }
+      50% { transform: scale(1.04); box-shadow: 0 0 45px rgba(255, 42, 133, 0.4); }
     }
 
     /* Control Sidebar */
     .control-panel {
-      width: 340px;
+      width: 310px;
       background: var(--bg-panel);
       -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       border-left: 1px solid var(--border-glass);
-      padding: 16px;
+      padding: 18px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 13px;
+      gap: 16px;
       z-index: 15;
-    }
-
-    .control-panel::-webkit-scrollbar { width: 5px; }
-    .control-panel::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 99px;
     }
 
     .panel-header {
       border-bottom: 1px solid var(--border-glass);
-      padding-bottom: 10px;
+      padding-bottom: 12px;
     }
 
     .panel-title {
@@ -265,10 +256,10 @@
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: 12px;
-      padding: 12px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .section-label {
@@ -286,7 +277,8 @@
       justify-content: space-between;
       gap: 10px;
       cursor: pointer;
-      font-size: 0.81rem;
+      font-size: 0.83rem;
+      font-weight: 500;
       color: #dce4f7;
     }
 
@@ -294,7 +286,7 @@
 
     .switch {
       position: relative;
-      width: 40px;
+      width: 42px;
       height: 22px;
       flex-shrink: 0;
     }
@@ -330,63 +322,22 @@
     }
 
     .switch input:checked + .slider-toggle:before {
-      transform: translateX(18px);
+      transform: translateX(20px);
       background-color: #05070c;
-    }
-
-    /* Range Sliders */
-    .range-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .range-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: #d0d8ec;
-    }
-
-    .range-val {
-      font-family: var(--font-mono);
-      color: var(--accent-cyan);
-      font-weight: 600;
-    }
-
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 99px;
-      outline: none;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--accent-cyan);
-      cursor: pointer;
-      box-shadow: 0 0 10px var(--accent-cyan);
     }
 
     /* Theme Pill Buttons */
     .pill-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
+      gap: 8px;
     }
 
     .pill-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-glass);
       color: var(--text-muted);
-      padding: 7px 10px;
+      padding: 8px 10px;
       border-radius: 8px;
       font-size: 0.76rem;
       font-weight: 600;
@@ -408,11 +359,11 @@
     }
 
     /* Action Buttons */
-    .btn-row { display: flex; gap: 8px; }
+    .btn-row { display: flex; gap: 8px; margin-top: auto; }
 
     .action-btn {
       flex: 1;
-      padding: 10px 12px;
+      padding: 11px 12px;
       border-radius: 10px;
       border: 1px solid rgba(0, 240, 255, 0.4);
       background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 140, 255, 0.2));
@@ -439,16 +390,18 @@
     /* Mobile Portrait Responsive Layout */
     @media (max-width: 860px) {
       .workspace { flex-direction: column; }
-      .stage-container { flex: 1.15; padding: 8px; }
+      .stage-container { flex: 1; padding: 8px; }
       .control-panel {
         width: 100%;
-        height: 44vh;
+        height: auto;
+        max-height: 42vh;
         border-left: none;
         border-top: 1px solid var(--border-glass);
-        padding: 12px;
+        padding: 14px;
+        gap: 12px;
       }
+      .panel-header { display: none; }
       .top-bar { padding: 8px 12px; }
-      .hud-bottom-hint { font-size: 0.68rem; padding: 5px 10px; }
     }
   </style>
 </head>
@@ -471,79 +424,41 @@
     <div class="workspace">
       <div class="stage-container">
         <div class="canvas-frame" id="canvasFrame">
-          <div class="hud-top">
-            <div class="hud-pill">
-              <div class="hud-stat">BALLS: <span id="statBalls">1</span></div>
-              <div class="hud-stat">RINGS: <span id="statRings">12</span></div>
-            </div>
-            <div class="hud-pill">
-              <div class="hud-stat">FPS: <span id="statFps">60</span></div>
-            </div>
-          </div>
-
           <canvas id="simCanvas"></canvas>
 
-          
+          <!-- Tap Anywhere Overlay -->
+          <div class="start-overlay" id="startOverlay">
+            <div class="start-badge">⚡ Tap Anywhere to Start Brainrot</div>
+            <div class="start-sub">Unlocks procedural synth audio &amp; physics loop</div>
+          </div>
         </div>
       </div>
 
-      <!-- Controls Sidebar -->
+      <!-- Streamlined Controls Sidebar -->
       <aside class="control-panel">
         <div class="panel-header">
-          <div class="panel-title">🌀 Concentric Ring Escape</div>
-          <div class="panel-subtitle">Pure autonomous simulation loop. Toggle viral physics rules in real time.</div>
+          <div class="panel-title">🌀 Viral Hook Rules</div>
+          <div class="panel-subtitle">Mix &amp; match the 4 classic TikTok simulation rules in real time.</div>
         </div>
 
         <div class="control-section">
-          <div class="section-label">Viral Rule Toggles</div>
+          <div class="section-label">Simulation Rules</div>
           <label class="toggle-row">
-            <span>💥 Shatter Ring on Escape</span>
-            <div class="switch"><input type="checkbox" id="ringShatter" checked /><span class="slider-toggle"></span></div>
-          </label>
-          <label class="toggle-row">
-            <span>🔨 Balls Crack Ring on Bounce</span>
-            <div class="switch"><input type="checkbox" id="ringBatter" checked /><span class="slider-toggle"></span></div>
-          </label>
-          <label class="toggle-row">
-            <span>🎈 Grow Ball on Every Bounce</span>
-            <div class="switch"><input type="checkbox" id="ringGrow" /><span class="slider-toggle"></span></div>
-          </label>
-          <label class="toggle-row">
-            <span>🧬 Clone Ball on Ring Escape</span>
+            <span>🧬 Clone Ball on Escape</span>
             <div class="switch"><input type="checkbox" id="ringMultiply" checked /><span class="slider-toggle"></span></div>
           </label>
           <label class="toggle-row">
-            <span>⚡ Hyper-Speed Bounce Boost</span>
+            <span>🎈 Grow Ball on Bounce</span>
+            <div class="switch"><input type="checkbox" id="ringGrow" /><span class="slider-toggle"></span></div>
+          </label>
+          <label class="toggle-row">
+            <span>🔨 Crack Rings on Hit</span>
+            <div class="switch"><input type="checkbox" id="ringBatter" checked /><span class="slider-toggle"></span></div>
+          </label>
+          <label class="toggle-row">
+            <span>⚡ Hyper-Speed Bounce</span>
             <div class="switch"><input type="checkbox" id="ringSpeedUp" /><span class="slider-toggle"></span></div>
           </label>
-          <label class="toggle-row">
-            <span>🔄 Alternating Ring Spin</span>
-            <div class="switch"><input type="checkbox" id="ringAltSpin" checked /><span class="slider-toggle"></span></div>
-          </label>
-          <label class="toggle-row">
-            <span>🎵 Rising Musical Scale</span>
-            <div class="switch"><input type="checkbox" id="ringMusical" checked /><span class="slider-toggle"></span></div>
-          </label>
-        </div>
-
-        <div class="control-section">
-          <div class="section-label">Arena Tuning</div>
-          <div class="range-group">
-            <div class="range-header"><span>Number of Rings</span><span class="range-val" id="valNumRings">12</span></div>
-            <input type="range" id="numRingsSlider" min="4" max="18" step="1" value="12" />
-          </div>
-          <div class="range-group">
-            <div class="range-header"><span>Gap Opening Size</span><span class="range-val" id="valGapSize">32°</span></div>
-            <input type="range" id="gapSizeSlider" min="18" max="65" step="1" value="32" />
-          </div>
-          <div class="range-group">
-            <div class="range-header"><span>Ring Spin Speed</span><span class="range-val" id="valSpinSpeed">1.0x</span></div>
-            <input type="range" id="spinSpeedSlider" min="0.2" max="2.5" step="0.1" value="1.0" />
-          </div>
-          <div class="range-group">
-            <div class="range-header"><span>Gravity Pull</span><span class="range-val" id="valGravity">0.14</span></div>
-            <input type="range" id="gravitySlider" min="0.02" max="0.35" step="0.02" value="0.14" />
-          </div>
         </div>
 
         <div class="control-section">
@@ -557,8 +472,8 @@
         </div>
 
         <div class="btn-row">
-          <button class="action-btn" id="ringResetBtn">🔄 New Video Loop</button>
-          <button class="action-btn secondary" id="ringChaosBtn">🔥 Max Chaos</button>
+          <button class="action-btn" id="ringResetBtn">🔄 Restart Loop</button>
+          <button class="action-btn secondary" id="ringChaosBtn">🔥 All Rules ON</button>
         </div>
       </aside>
     </div>
@@ -580,10 +495,12 @@
           const AudioCtx = window.AudioContext || window.webkitAudioContext;
           if (AudioCtx) this.ctx = new AudioCtx();
         }
-        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
       }
 
-      canPlay(gap = 28) {
+      canPlay(gap = 30) {
         if (!this.enabled) return false;
         this.init();
         if (!this.ctx) return false;
@@ -593,27 +510,22 @@
         return true;
       }
 
-      playBounce(musical = true, sizeRatio = 1) {
-        if (!this.canPlay(28)) return;
+      playBounce(sizeRatio = 1) {
+        if (!this.canPlay(30)) return;
         const t = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
 
-        if (musical) {
-          const freq = this.scale[this.scaleIndex++ % this.scale.length];
-          osc.frequency.setValueAtTime(freq / Math.max(0.6, Math.min(1.8, sizeRatio * 0.7)), t);
-          osc.type = 'triangle';
-        } else {
-          osc.frequency.setValueAtTime(320 + Math.random() * 180, t);
-          osc.type = 'sine';
-        }
+        const freq = this.scale[this.scaleIndex++ % this.scale.length];
+        osc.frequency.setValueAtTime(freq / Math.max(0.6, Math.min(1.8, sizeRatio * 0.7)), t);
+        osc.type = 'triangle';
 
         gain.gain.setValueAtTime(0.11, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.13);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(t);
-        osc.stop(t + 0.14);
+        osc.stop(t + 0.13);
       }
 
       playShatter() {
@@ -623,78 +535,68 @@
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, t + i * 0.025);
-          gain.gain.setValueAtTime(0.08, t + i * 0.025);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.025 + 0.22);
+          osc.frequency.setValueAtTime(freq, t + i * 0.024);
+          gain.gain.setValueAtTime(0.075, t + i * 0.024);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.024 + 0.2);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-          osc.start(t + i * 0.025);
-          osc.stop(t + i * 0.025 + 0.22);
+          osc.start(t + i * 0.024);
+          osc.stop(t + i * 0.024 + 0.2);
         });
-      }
-
-      playEscape() {
-        if (!this.canPlay(45)) return;
-        const t = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(440, t);
-        osc.frequency.exponentialRampToValueAtTime(880, t + 0.14);
-        gain.gain.setValueAtTime(0.11, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(t);
-        osc.stop(t + 0.15);
       }
     }
 
     const sfx = new SoundEngine();
-    window.addEventListener('pointerdown', () => sfx.init(), { once: true });
+    let simulationStarted = false;
 
-    /* 2. CANVAS & PARTICLES ENGINE */
+    function startBrainrot() {
+      if (simulationStarted) return;
+      simulationStarted = true;
+      sfx.init();
+      document.getElementById('startOverlay').classList.add('hidden');
+      initRingsMode();
+      sfx.playBounce(1);
+    }
+
+    window.addEventListener('pointerdown', startBrainrot, { once: true });
+
+    /* 2. CANVAS & SUBTLE PARTICLES ENGINE */
     const canvas = document.getElementById('simCanvas');
     const ctx = canvas.getContext('2d');
     let W = 800, H = 600, shakeIntensity = 0;
-    const particles = [], popups = [];
+    const particles = [];
 
     function addShake(amt) {
-      shakeIntensity = Math.min(16, shakeIntensity + amt);
+      shakeIntensity = Math.min(10, shakeIntensity + amt);
     }
 
-    function spawnParticles(x, y, color, count = 14, speed = 5, size = 3) {
-      if (particles.length > 450) particles.splice(0, count);
+    function spawnParticles(x, y, color, count = 3, speed = 2.2, size = 1.6, decay = 0.055) {
+      if (particles.length > 320) particles.splice(0, count);
       for (let i = 0; i < count; i++) {
         const a = Math.random() * Math.PI * 2;
-        const v = (0.3 + Math.random() * 0.9) * speed;
+        const v = (0.4 + Math.random() * 0.7) * speed;
         particles.push({
           x, y,
           vx: Math.cos(a) * v,
           vy: Math.sin(a) * v,
-          r: size * (0.6 + Math.random() * 0.7),
+          r: size * (0.7 + Math.random() * 0.5),
           color,
-          alpha: 1,
-          decay: 0.02 + Math.random() * 0.02
+          alpha: 0.9,
+          decay: decay + Math.random() * 0.02
         });
       }
     }
 
-    function spawnPopup(x, y, text, color = '#00f0ff') {
-      if (popups.length > 25) popups.shift();
-      popups.push({ x, y, text, color, alpha: 1, vy: -1.4 });
-    }
-
-    function updateAndDrawFX() {
+    function updateAndDrawFX(dt) {
       ctx.save();
       ctx.globalCompositeOperation = 'lighter';
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vx *= 0.96;
-        p.vy *= 0.96;
-        p.alpha -= p.decay;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.vx *= Math.pow(0.95, dt);
+        p.vy *= Math.pow(0.95, dt);
+        p.alpha -= p.decay * dt;
         if (p.alpha <= 0.01) {
           particles.splice(i, 1);
           continue;
@@ -704,25 +606,6 @@
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
-      }
-      ctx.restore();
-
-      ctx.save();
-      ctx.font = '800 13px Inter, sans-serif';
-      ctx.textAlign = 'center';
-      for (let i = popups.length - 1; i >= 0; i--) {
-        const pp = popups[i];
-        pp.y += pp.vy;
-        pp.alpha -= 0.024;
-        if (pp.alpha <= 0.01) {
-          popups.splice(i, 1);
-          continue;
-        }
-        ctx.globalAlpha = pp.alpha;
-        ctx.fillStyle = pp.color;
-        ctx.shadowColor = pp.color;
-        ctx.shadowBlur = 8;
-        ctx.fillText(pp.text, pp.x, pp.y);
       }
       ctx.restore();
     }
@@ -735,16 +618,12 @@
 
     /* 3. CONCENTRIC RING ESCAPE ENGINE */
     const ringConfig = {
-      shatterOnEscape: true,
-      batterRing: true,
-      growOnBounce: false,
       multiplyOnEscape: true,
+      growOnBounce: false,
+      batterRing: true,
       speedUp: false,
-      altSpin: true,
-      musical: true,
       numRings: 12,
-      gapDeg: 32,
-      spinMult: 1.0,
+      gapDeg: 34,
       gravity: 0.14,
       theme: 'cyberpunk'
     };
@@ -763,6 +642,7 @@
     function initRingsMode() {
       rings = [];
       ringBalls = [];
+      particles.length = 0;
       ringAutoResetTimer = 0;
 
       const minDim = Math.min(W, H);
@@ -774,13 +654,12 @@
       const gapRad = (ringConfig.gapDeg * Math.PI) / 180;
 
       for (let i = 0; i < count; i++) {
-        const dir = ringConfig.altSpin ? (i % 2 === 0 ? 1 : -1) : 1;
+        const dir = i % 2 === 0 ? 1 : -1;
         rings.push({
           radius: minR + i * stepR,
           angle: (i * 0.45) % (Math.PI * 2),
           gapSize: gapRad,
-          baseSpeed: 0.013 + i * 0.0016,
-          rotSpeed: dir * (0.013 + i * 0.0016) * ringConfig.spinMult,
+          rotSpeed: dir * (0.013 + i * 0.0015),
           color: palette[i % palette.length],
           broken: false,
           hp: 10 + i * 2,
@@ -788,12 +667,12 @@
         });
       }
 
-      const startAngle = Math.random() * Math.PI * 2;
+      const startAngle = -Math.PI * 0.35 + (Math.random() - 0.5) * 0.5;
       ringBalls.push({
         x: W / 2,
         y: H / 2,
-        vx: Math.cos(startAngle) * 5.5,
-        vy: Math.sin(startAngle) * 5.5,
+        vx: Math.cos(startAngle) * 5.4,
+        vy: Math.sin(startAngle) * 5.4,
         r: Math.max(6, minDim * 0.015),
         color: '#ffffff',
         trail: [],
@@ -805,29 +684,28 @@
       if (ring.broken) return;
       ring.broken = true;
       sfx.playShatter();
-      addShake(5);
+      addShake(3.5);
 
-      const segs = 36;
+      const segs = 28;
       for (let i = 0; i < segs; i++) {
         const a = (i / segs) * Math.PI * 2;
         if (Math.abs(normalizeAngle(a - ring.angle)) < ring.gapSize * 0.5) continue;
         particles.push({
           x: cx + Math.cos(a) * ring.radius,
           y: cy + Math.sin(a) * ring.radius,
-          vx: Math.cos(a) * (2 + Math.random() * 3.5),
-          vy: Math.sin(a) * (2 + Math.random() * 3.5),
-          r: 3.2,
+          vx: Math.cos(a) * (1.5 + Math.random() * 2.5),
+          vy: Math.sin(a) * (1.5 + Math.random() * 2.5),
+          r: 2.5,
           color: ring.color,
-          alpha: 1,
-          decay: 0.022
+          alpha: 0.95,
+          decay: 0.032
         });
       }
     }
 
-    function updateAndDrawRings() {
+    function updateAndDrawRings(dt) {
       const cx = W / 2;
       const cy = H / 2;
-      const gapRad = (ringConfig.gapDeg * Math.PI) / 180;
       let activeRingsCount = 0;
 
       // Update & Draw Rings
@@ -838,21 +716,34 @@
         if (r.broken) continue;
         activeRingsCount++;
 
-        const dir = ringConfig.altSpin ? (i % 2 === 0 ? 1 : -1) : 1;
-        r.rotSpeed = r.baseSpeed * dir * ringConfig.spinMult;
-        r.gapSize = gapRad;
-        r.angle = normalizeAngle(r.angle + r.rotSpeed);
-        if (r.flash > 0) r.flash = Math.max(0, r.flash - 0.08);
+        r.angle = normalizeAngle(r.angle + r.rotSpeed * dt);
+        if (r.flash > 0) r.flash = Math.max(0, r.flash - 0.14 * dt);
 
         ctx.beginPath();
         ctx.arc(cx, cy, r.radius, r.angle + r.gapSize / 2, r.angle + Math.PI * 2 - r.gapSize / 2);
-        ctx.strokeStyle = r.flash > 0.1 ? '#ffffff' : r.color;
-        ctx.lineWidth = 5.5;
+        ctx.strokeStyle = r.color;
+        ctx.lineWidth = 5.2 + r.flash * 2.0;
         ctx.shadowColor = r.color;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 10 + r.flash * 10;
         ctx.stroke();
       }
       ctx.restore();
+
+      // Pause ball movement until user taps start
+      if (!simulationStarted) {
+        const b = ringBalls[0];
+        if (b) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowColor = '#00f0ff';
+          ctx.shadowBlur = 14;
+          ctx.fill();
+          ctx.restore();
+        }
+        return;
+      }
 
       // Update Balls
       const newBalls = [];
@@ -862,12 +753,12 @@
           b.ringIdx++;
         }
 
-        b.vy += ringConfig.gravity;
-        b.x += b.vx;
-        b.y += b.vy;
+        b.vy += ringConfig.gravity * dt;
+        b.x += b.vx * dt;
+        b.y += b.vy * dt;
 
         b.trail.push({ x: b.x, y: b.y });
-        if (b.trail.length > 14) b.trail.shift();
+        if (b.trail.length > 12) b.trail.shift();
 
         const dx = b.x - cx;
         const dy = b.y - cy;
@@ -877,24 +768,23 @@
           const ring = rings[b.ringIdx];
           if (dist + b.r >= ring.radius) {
             const diff = Math.abs(normalizeAngle(Math.atan2(dy, dx) - ring.angle));
+            const angularBallRadius = Math.asin(Math.min(0.95, b.r / ring.radius));
+            const effectiveHalfGap = ring.gapSize * 0.5 - angularBallRadius * 0.65;
 
-            // Escape through gap
-            if (diff < ring.gapSize * 0.48) {
+            // Escape through gap if ball fits
+            if (diff < effectiveHalfGap) {
               b.ringIdx++;
               b.color = ring.color;
-              spawnPopup(b.x, b.y, 'ESCAPED!', ring.color);
+              shatterRingObj(ring, cx, cy);
 
-              if (ringConfig.shatterOnEscape) shatterRingObj(ring, cx, cy);
-              else sfx.playEscape();
-
-              if (ringConfig.multiplyOnEscape && ringBalls.length + newBalls.length < 85) {
+              if (ringConfig.multiplyOnEscape && ringBalls.length + newBalls.length < 75) {
                 const spd = Math.hypot(b.vx, b.vy);
                 const ba = Math.atan2(b.vy, b.vx);
                 newBalls.push({
                   x: b.x,
                   y: b.y,
-                  vx: Math.cos(ba + 0.24) * spd,
-                  vy: Math.sin(ba + 0.24) * spd,
+                  vx: Math.cos(ba + 0.22) * spd,
+                  vy: Math.sin(ba + 0.22) * spd,
                   r: b.r,
                   color: ring.color,
                   trail: [],
@@ -914,27 +804,28 @@
                 b.vx -= 2 * dot * nx;
                 b.vy -= 2 * dot * ny;
               }
-              b.vx += -ny * ring.rotSpeed * 12;
-              b.vy += nx * ring.rotSpeed * 12;
+              b.vx += -ny * ring.rotSpeed * 11;
+              b.vy += nx * ring.rotSpeed * 11;
 
-              const boost = ringConfig.speedUp ? 1.035 : 1.005;
-              const spd = Math.min(15, Math.max(5.2, Math.hypot(b.vx, b.vy) * boost));
+              const boost = ringConfig.speedUp ? 1.035 : 1.004;
+              const spd = Math.min(14.5, Math.max(5.2, Math.hypot(b.vx, b.vy) * boost));
               const ca = Math.atan2(b.vy, b.vx);
               b.vx = Math.cos(ca) * spd;
               b.vy = Math.sin(ca) * spd;
 
               if (ringConfig.growOnBounce) {
-                b.r = Math.min(ring.radius * 0.55, b.r * 1.035 + 0.25);
+                b.r = Math.min(ring.radius * 0.55, b.r * 1.032 + 0.2);
               }
 
+              // Subtle flash & micro-splash
               ring.flash = 1;
               b.color = ring.color;
-              spawnParticles(b.x + nx * b.r, b.y + ny * b.r, ring.color, 6, 3.5, 2.4);
-              sfx.playBounce(ringConfig.musical, b.r / 10);
+              spawnParticles(b.x + nx * b.r, b.y + ny * b.r, ring.color, 3, 2.0, 1.5, 0.06);
+              sfx.playBounce(b.r / 10);
 
-              if (ringConfig.batterRing) {
+              if (ringConfig.batterRing || b.r >= ring.radius * 0.48) {
                 ring.hp -= ringConfig.growOnBounce ? 2.2 : 1;
-                if (ring.hp <= 0 || b.r >= ring.radius * 0.52) {
+                if (ring.hp <= 0 || b.r >= ring.radius * 0.48) {
                   shatterRingObj(ring, cx, cy);
                 }
               }
@@ -956,9 +847,9 @@
           const pt = b.trail[t];
           const ratio = (t + 1) / b.trail.length;
           ctx.beginPath();
-          ctx.arc(pt.x, pt.y, b.r * ratio * 0.85, 0, Math.PI * 2);
+          ctx.arc(pt.x, pt.y, b.r * ratio * 0.82, 0, Math.PI * 2);
           ctx.fillStyle = b.color;
-          ctx.globalAlpha = ratio * 0.28;
+          ctx.globalAlpha = ratio * 0.24;
           ctx.fill();
         }
         ctx.globalAlpha = 1;
@@ -966,51 +857,38 @@
         ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
         ctx.shadowColor = b.color;
-        ctx.shadowBlur = 16;
+        ctx.shadowBlur = 14;
         ctx.fill();
       }
       ctx.restore();
 
-      // Auto-Reset Loop when all rings are cleared
+      // Seamless Auto-Restart when all rings are cleared
       if (activeRingsCount === 0 || ringBalls.every(b => b.ringIdx >= rings.length)) {
-        if (ringAutoResetTimer === 0) {
-          ringAutoResetTimer = 95;
-          spawnParticles(cx, cy, '#00f0ff', 42, 7, 4);
-          spawnPopup(cx, cy - 20, 'ALL RINGS CLEARED!', '#00f59b');
+        ringAutoResetTimer += dt;
+        if (ringAutoResetTimer >= 70) {
+          initRingsMode();
         }
-        ringAutoResetTimer--;
-
-        ctx.save();
-        ctx.fillStyle = 'rgba(6, 8, 15, 0.82)';
-        ctx.fillRect(cx - 135, cy - 22, 270, 44);
-        ctx.strokeStyle = '#00f0ff';
-        ctx.strokeRect(cx - 135, cy - 22, 270, 44);
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '700 14px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(`🎬 Next Loop in ${(ringAutoResetTimer / 60).toFixed(1)}s...`, cx, cy);
-        ctx.restore();
-
-        if (ringAutoResetTimer <= 0) initRingsMode();
       }
-
-      document.getElementById('statBalls').textContent = ringBalls.length;
-      document.getElementById('statRings').textContent = activeRingsCount;
     }
 
     /* 4. RESIZE, UI BINDINGS & MAIN LOOP */
     function resizeCanvas() {
       const rect = document.getElementById('canvasFrame').getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = Math.max(300, Math.floor(rect.width));
-      H = Math.max(300, Math.floor(rect.height));
+      const newW = Math.max(280, Math.floor(rect.width));
+      const newH = Math.max(280, Math.floor(rect.height));
+      if (Math.abs(newW - W) < 4 && Math.abs(newH - H) < 4 && rings.length > 0) return;
+
+      W = newW;
+      H = newH;
       canvas.width = W * dpr;
       canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       initRingsMode();
     }
-    window.addEventListener('resize', resizeCanvas);
+
+    const resizeObserver = new ResizeObserver(() => resizeCanvas());
+    resizeObserver.observe(document.getElementById('canvasFrame'));
 
     document.getElementById('aspectBtn').addEventListener('click', e => {
       const frame = document.getElementById('canvasFrame');
@@ -1018,7 +896,6 @@
       const isReels = frame.classList.contains('reels-frame');
       e.target.classList.toggle('active', isReels);
       e.target.textContent = isReels ? '🖥️ Full Canvas' : '📱 9:16 Reels Frame';
-      setTimeout(resizeCanvas, 310);
     });
 
     document.getElementById('soundBtn').addEventListener('click', e => {
@@ -1028,33 +905,11 @@
       e.target.textContent = sfx.enabled ? '🔊 Audio: ON' : '🔇 Audio: OFF';
     });
 
-    // Toggles
-    document.getElementById('ringShatter').addEventListener('change', e => ringConfig.shatterOnEscape = e.target.checked);
-    document.getElementById('ringBatter').addEventListener('change', e => ringConfig.batterRing = e.target.checked);
-    document.getElementById('ringGrow').addEventListener('change', e => ringConfig.growOnBounce = e.target.checked);
+    // Core 4 Viral Rule Toggles
     document.getElementById('ringMultiply').addEventListener('change', e => ringConfig.multiplyOnEscape = e.target.checked);
+    document.getElementById('ringGrow').addEventListener('change', e => ringConfig.growOnBounce = e.target.checked);
+    document.getElementById('ringBatter').addEventListener('change', e => ringConfig.batterRing = e.target.checked);
     document.getElementById('ringSpeedUp').addEventListener('change', e => ringConfig.speedUp = e.target.checked);
-    document.getElementById('ringAltSpin').addEventListener('change', e => ringConfig.altSpin = e.target.checked);
-    document.getElementById('ringMusical').addEventListener('change', e => ringConfig.musical = e.target.checked);
-
-    // Sliders
-    document.getElementById('numRingsSlider').addEventListener('input', e => {
-      ringConfig.numRings = +e.target.value;
-      document.getElementById('valNumRings').textContent = ringConfig.numRings;
-      initRingsMode();
-    });
-    document.getElementById('gapSizeSlider').addEventListener('input', e => {
-      ringConfig.gapDeg = +e.target.value;
-      document.getElementById('valGapSize').textContent = `${ringConfig.gapDeg}°`;
-    });
-    document.getElementById('spinSpeedSlider').addEventListener('input', e => {
-      ringConfig.spinMult = +e.target.value;
-      document.getElementById('valSpinSpeed').textContent = `${ringConfig.spinMult.toFixed(1)}x`;
-    });
-    document.getElementById('gravitySlider').addEventListener('input', e => {
-      ringConfig.gravity = +e.target.value;
-      document.getElementById('valGravity').textContent = ringConfig.gravity.toFixed(2);
-    });
 
     // Themes
     document.querySelectorAll('#ringThemeGroup .pill-btn').forEach(btn => {
@@ -1067,44 +922,45 @@
       });
     });
 
-    document.getElementById('ringResetBtn').addEventListener('click', initRingsMode);
-    document.getElementById('ringChaosBtn').addEventListener('click', () => {
-      ['ringShatter', 'ringBatter', 'ringGrow', 'ringMultiply', 'ringSpeedUp'].forEach(id => {
-        document.getElementById(id).checked = true;
-      });
-      Object.assign(ringConfig, {
-        shatterOnEscape: true,
-        batterRing: true,
-        growOnBounce: true,
-        multiplyOnEscape: true,
-        speedUp: true
-      });
+    document.getElementById('ringResetBtn').addEventListener('click', () => {
+      startBrainrot();
       initRingsMode();
     });
 
-    let lastFpsTime = performance.now(), frameCount = 0;
+    document.getElementById('ringChaosBtn').addEventListener('click', () => {
+      ['ringMultiply', 'ringGrow', 'ringBatter', 'ringSpeedUp'].forEach(id => {
+        document.getElementById(id).checked = true;
+      });
+      Object.assign(ringConfig, {
+        multiplyOnEscape: true,
+        growOnBounce: true,
+        batterRing: true,
+        speedUp: true
+      });
+      startBrainrot();
+      initRingsMode();
+    });
+
+    let lastFrameTime = performance.now();
     function animate(now) {
       requestAnimationFrame(animate);
-      frameCount++;
-      if (now - lastFpsTime >= 500) {
-        document.getElementById('statFps').textContent = Math.min(60, Math.round((frameCount * 1000) / (now - lastFpsTime)));
-        frameCount = 0;
-        lastFpsTime = now;
-      }
+      const elapsed = now - lastFrameTime;
+      lastFrameTime = now;
+      const dt = Math.min(2.2, Math.max(0.5, elapsed / 16.667));
 
       ctx.save();
       ctx.fillStyle = '#05060a';
       ctx.fillRect(0, 0, W, H);
 
-      if (shakeIntensity > 0.2) {
+      if (shakeIntensity > 0.15) {
         ctx.translate((Math.random() - 0.5) * shakeIntensity, (Math.random() - 0.5) * shakeIntensity);
-        shakeIntensity *= 0.86;
+        shakeIntensity *= Math.pow(0.84, dt);
       } else {
         shakeIntensity = 0;
       }
 
-      updateAndDrawRings();
-      updateAndDrawFX();
+      updateAndDrawRings(dt);
+      updateAndDrawFX(dt);
       ctx.restore();
     }
 
