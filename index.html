@@ -250,9 +250,9 @@
     }
 
     .action-btn.secondary.all-on {
-      border-color: rgba(255, 255, 255, 0.28);
+      border-color: rgba(0, 240, 255, 0.35);
       background: rgba(255, 255, 255, 0.08);
-      color: #cbd5e1;
+      color: #e2e8f0;
     }
 
     .action-btn.secondary:hover {
@@ -632,7 +632,6 @@
         rings.push({
           index: i,
           radius: minR + i * stepR,
-          // Tuned initial gap angles so the first ring shatters after ~3 musical bounces
           angle: normalizeAngle(0.35 + i * 0.48),
           gapSize: gapRad,
           rotSpeed: dir * (0.013 + i * 0.0015),
@@ -899,9 +898,8 @@
       e.target.textContent = sfx.enabled ? '🔊 Audio: ON' : '🔇 Audio: OFF';
     });
 
-    // Dynamic "All Toggles ON / OFF" State Sync
+    // Dynamic "All Toggles ON" <-> "Default" State Sync
     const allTogglesBtn = document.getElementById('allTogglesBtn');
-    const toggleIds = ['ringMultiply', 'ringGrow', 'ringSpeedUp'];
 
     function areAllTogglesOn() {
       return ringConfig.multiplyOnEscape && ringConfig.growOnBounce && ringConfig.speedUp;
@@ -909,7 +907,7 @@
 
     function syncAllTogglesButton() {
       const allOn = areAllTogglesOn();
-      allTogglesBtn.textContent = allOn ? '✖ All Toggles OFF' : '🔥 All Toggles ON';
+      allTogglesBtn.textContent = allOn ? '↺ Default' : '🔥 All Toggles ON';
       allTogglesBtn.classList.toggle('all-on', allOn);
     }
 
@@ -927,13 +925,20 @@
     });
 
     allTogglesBtn.addEventListener('click', () => {
-      const targetState = !areAllTogglesOn();
-      toggleIds.forEach(id => {
-        document.getElementById(id).checked = targetState;
-      });
-      ringConfig.multiplyOnEscape = targetState;
-      ringConfig.growOnBounce = targetState;
-      ringConfig.speedUp = targetState;
+      if (areAllTogglesOn()) {
+        // Return to ideal Default state (Clone ON, Grow & Speed OFF)
+        ringConfig.multiplyOnEscape = true;
+        ringConfig.growOnBounce = false;
+        ringConfig.speedUp = false;
+      } else {
+        // Turn all 3 toggles ON
+        ringConfig.multiplyOnEscape = true;
+        ringConfig.growOnBounce = true;
+        ringConfig.speedUp = true;
+      }
+      document.getElementById('ringMultiply').checked = ringConfig.multiplyOnEscape;
+      document.getElementById('ringGrow').checked = ringConfig.growOnBounce;
+      document.getElementById('ringSpeedUp').checked = ringConfig.speedUp;
       syncAllTogglesButton();
       startBrainrot();
     });
