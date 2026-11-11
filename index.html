@@ -7,7 +7,7 @@
   <style>
     :root {
       --bg-deep: #06070b;
-      --bg-panel: rgba(14, 17, 26, 0.9);
+      --bg-panel: rgba(14, 17, 26, 0.92);
       --bg-card: rgba(25, 30, 45, 0.65);
       --border-glass: rgba(255, 255, 255, 0.09);
       --text-main: #f3f6ff;
@@ -38,31 +38,33 @@
     .app-shell {
       display: flex;
       flex-direction: column;
-      width: 100vw;
+      width: 100%;
+      max-width: 100vw;
       height: 100vh;
       height: 100dvh;
+      overflow: hidden;
     }
 
-    /* Top Header */
+    /* Top Header - Flush Left & Right Alignment */
     .top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 18px;
+      width: 100%;
+      padding: 10px 16px;
       background: rgba(10, 12, 19, 0.88);
       -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-glass);
       z-index: 20;
-      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       font-weight: 800;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.9px;
       font-size: 0.92rem;
       white-space: nowrap;
     }
@@ -73,6 +75,7 @@
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
       box-shadow: 0 0 12px var(--accent-cyan);
+      flex-shrink: 0;
     }
 
     .brand span {
@@ -82,17 +85,11 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
     .icon-btn {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border-glass);
       color: var(--text-main);
-      padding: 6px 11px;
+      padding: 6px 12px;
       border-radius: 9px;
       font-size: 0.76rem;
       font-weight: 600;
@@ -102,6 +99,7 @@
       gap: 6px;
       transition: all 0.2s ease;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .icon-btn:hover {
@@ -129,7 +127,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      padding: 12px;
+      padding: 12px 16px;
       overflow: hidden;
       background:
         radial-gradient(circle at center, rgba(0, 240, 255, 0.04) 0%, transparent 65%),
@@ -150,17 +148,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: width 0.3s ease, height 0.3s ease;
-    }
-
-    /* 9:16 Vertical Reels Mode */
-    .canvas-frame.reels-frame {
-      width: auto;
-      height: 96%;
-      aspect-ratio: 9 / 16;
-      max-width: 96%;
-      border: 2px solid rgba(0, 240, 255, 0.35);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 240, 255, 0.16);
     }
 
     canvas {
@@ -173,9 +160,9 @@
     .start-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(5, 6, 10, 0.65);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
+      background: rgba(5, 6, 10, 0.62);
+      -webkit-backdrop-filter: blur(7px);
+      backdrop-filter: blur(7px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -201,8 +188,8 @@
       box-shadow: 0 0 35px rgba(0, 240, 255, 0.25), inset 0 0 18px rgba(255, 42, 133, 0.15);
       color: #ffffff;
       font-weight: 800;
-      font-size: 0.92rem;
-      letter-spacing: 1.3px;
+      font-size: 0.9rem;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       animation: pulseBadge 1.8s infinite ease-in-out;
     }
@@ -221,7 +208,7 @@
 
     /* Control Sidebar */
     .control-panel {
-      width: 290px;
+      width: 295px;
       background: var(--bg-panel);
       -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
@@ -241,15 +228,16 @@
 
     .action-btn {
       flex: 1;
-      padding: 10px 12px;
+      padding: 10px 10px;
       border-radius: 10px;
       border: 1px solid rgba(0, 240, 255, 0.4);
       background: linear-gradient(135deg, rgba(0, 240, 255, 0.22), rgba(0, 140, 255, 0.2));
       color: #fff;
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       cursor: pointer;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
     .action-btn:hover {
@@ -259,6 +247,12 @@
     .action-btn.secondary {
       border-color: rgba(255, 42, 133, 0.45);
       background: linear-gradient(135deg, rgba(255, 42, 133, 0.22), rgba(157, 78, 221, 0.2));
+    }
+
+    .action-btn.secondary.all-on {
+      border-color: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
     }
 
     .action-btn.secondary:hover {
@@ -372,10 +366,11 @@
       box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
     }
 
-    /* Mobile Portrait Responsive Layout (72%+ Canvas Height) */
+    /* Mobile Portrait Responsive Layout */
     @media (max-width: 860px) {
+      .top-bar { padding: 8px 12px; }
       .workspace { flex-direction: column; }
-      .stage-container { flex: 1; padding: 8px; }
+      .stage-container { flex: 1; padding: 8px 12px; }
       .control-panel {
         width: 100%;
         height: auto;
@@ -389,25 +384,21 @@
         gap: 7px;
       }
       .action-btn {
-        padding: 8px 10px;
+        padding: 9px 10px;
       }
-      .top-bar { padding: 8px 12px; }
     }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <!-- Top Bar -->
+    <!-- Clean Top Bar -->
     <header class="top-bar">
       <div class="brand">
         <div class="brand-dot"></div>
-        <span>NEON LABS // RING ESCAPE</span>
+        <span>NEON LABS</span>
       </div>
 
-      <div class="top-actions">
-        <button class="icon-btn" id="aspectBtn">📱 9:16 Reels</button>
-        <button class="icon-btn active" id="soundBtn">🔊 Audio: ON</button>
-      </div>
+      <button class="icon-btn active" id="soundBtn">🔊 Audio: ON</button>
     </header>
 
     <!-- Main Workspace -->
@@ -429,7 +420,7 @@
         <!-- Quick Actions at the Top -->
         <div class="btn-row">
           <button class="action-btn" id="ringResetBtn">🔄 Restart</button>
-          <button class="action-btn secondary" id="ringChaosBtn">🔥 Chaos</button>
+          <button class="action-btn secondary" id="allTogglesBtn">🔥 All Toggles ON</button>
         </div>
 
         <!-- 3 Core Rules -->
@@ -514,7 +505,6 @@
       playShatter(ringIndex = 0, totalRings = 12) {
         if (!this.canPlay(50)) return;
         const t = this.ctx.currentTime;
-        // Pitch rises progressively as outer rings shatter
         const pitchMult = 0.85 + (ringIndex / Math.max(1, totalRings - 1)) * 0.65;
         [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
           const osc = this.ctx.createOscillator();
@@ -607,7 +597,7 @@
       growOnBounce: false,
       speedUp: false,
       numRings: 12,
-      gapDeg: 34,
+      gapDeg: 35,
       gravity: 0.14,
       theme: 'cyberpunk'
     };
@@ -642,7 +632,8 @@
         rings.push({
           index: i,
           radius: minR + i * stepR,
-          angle: (i * 0.45) % (Math.PI * 2),
+          // Tuned initial gap angles so the first ring shatters after ~3 musical bounces
+          angle: normalizeAngle(0.35 + i * 0.48),
           gapSize: gapRad,
           rotSpeed: dir * (0.013 + i * 0.0015),
           color: palette[i % palette.length],
@@ -651,12 +642,12 @@
         });
       }
 
-      const startAngle = -Math.PI * 0.35 + (Math.random() - 0.5) * 0.5;
+      const startAngle = -Math.PI * 0.62 + (Math.random() - 0.5) * 0.22;
       ringBalls.push({
         x: W / 2,
         y: H / 2,
-        vx: Math.cos(startAngle) * 5.4,
-        vy: Math.sin(startAngle) * 5.4,
+        vx: Math.cos(startAngle) * 5.5,
+        vy: Math.sin(startAngle) * 5.5,
         r: Math.max(6, minDim * 0.015),
         color: '#ffffff',
         trail: [],
@@ -695,7 +686,6 @@
       b.vy = Math.sin(ca) * spd;
 
       if (ringConfig.growOnBounce) {
-        // Cap ball size to 58% of current ring so it still moves and can hit the gap middle
         b.r = Math.min(ring.radius * 0.58, b.r * 1.03 + 0.18);
       }
 
@@ -772,7 +762,7 @@
             const ballAngle = Math.atan2(dy, dx);
             const diff = Math.abs(normalizeAngle(ballAngle - ring.angle));
 
-            // 1. Reasonable Middle of Gap -> Clean Escape & Shatter (even for overgrown balls)
+            // 1. Reasonable Middle of Gap -> Clean Escape & Shatter
             if (diff < ring.gapSize * 0.43) {
               b.ringIdx++;
               b.color = ring.color;
@@ -806,7 +796,6 @@
               lx /= lDist;
               ly /= lDist;
 
-              // Ensure ball bounces back inside the ring arena
               if (lx * dx + ly * dy > 0) {
                 lx = -dx / dist;
                 ly = -dy / dist;
@@ -823,7 +812,7 @@
               }
               applyBounceBoostAndEffects(b, ring, lipX, lipY);
             }
-            // 3. Solid Ring Interior Wall Bounce (Never shatters ring)
+            // 3. Solid Ring Interior Wall Bounce
             else {
               const nx = dx / dist;
               const ny = dy / dist;
@@ -843,7 +832,6 @@
             }
           }
         } else {
-          // Gentle float & boundary bounce once all rings are cleared
           b.vx -= dx * 0.0003 * dt;
           b.vy -= dy * 0.0003 * dt;
           if (b.x < b.r || b.x > W - b.r) b.vx *= -0.9;
@@ -904,14 +892,6 @@
     const resizeObserver = new ResizeObserver(() => resizeCanvas());
     resizeObserver.observe(document.getElementById('canvasFrame'));
 
-    document.getElementById('aspectBtn').addEventListener('click', e => {
-      const frame = document.getElementById('canvasFrame');
-      frame.classList.toggle('reels-frame');
-      const isReels = frame.classList.contains('reels-frame');
-      e.target.classList.toggle('active', isReels);
-      e.target.textContent = isReels ? '🖥️ Full' : '📱 9:16 Reels';
-    });
-
     document.getElementById('soundBtn').addEventListener('click', e => {
       sfx.init();
       sfx.enabled = !sfx.enabled;
@@ -919,10 +899,44 @@
       e.target.textContent = sfx.enabled ? '🔊 Audio: ON' : '🔇 Audio: OFF';
     });
 
-    // Core 3 Viral Rule Toggles
-    document.getElementById('ringMultiply').addEventListener('change', e => ringConfig.multiplyOnEscape = e.target.checked);
-    document.getElementById('ringGrow').addEventListener('change', e => ringConfig.growOnBounce = e.target.checked);
-    document.getElementById('ringSpeedUp').addEventListener('change', e => ringConfig.speedUp = e.target.checked);
+    // Dynamic "All Toggles ON / OFF" State Sync
+    const allTogglesBtn = document.getElementById('allTogglesBtn');
+    const toggleIds = ['ringMultiply', 'ringGrow', 'ringSpeedUp'];
+
+    function areAllTogglesOn() {
+      return ringConfig.multiplyOnEscape && ringConfig.growOnBounce && ringConfig.speedUp;
+    }
+
+    function syncAllTogglesButton() {
+      const allOn = areAllTogglesOn();
+      allTogglesBtn.textContent = allOn ? '✖ All Toggles OFF' : '🔥 All Toggles ON';
+      allTogglesBtn.classList.toggle('all-on', allOn);
+    }
+
+    document.getElementById('ringMultiply').addEventListener('change', e => {
+      ringConfig.multiplyOnEscape = e.target.checked;
+      syncAllTogglesButton();
+    });
+    document.getElementById('ringGrow').addEventListener('change', e => {
+      ringConfig.growOnBounce = e.target.checked;
+      syncAllTogglesButton();
+    });
+    document.getElementById('ringSpeedUp').addEventListener('change', e => {
+      ringConfig.speedUp = e.target.checked;
+      syncAllTogglesButton();
+    });
+
+    allTogglesBtn.addEventListener('click', () => {
+      const targetState = !areAllTogglesOn();
+      toggleIds.forEach(id => {
+        document.getElementById(id).checked = targetState;
+      });
+      ringConfig.multiplyOnEscape = targetState;
+      ringConfig.growOnBounce = targetState;
+      ringConfig.speedUp = targetState;
+      syncAllTogglesButton();
+      startBrainrot();
+    });
 
     // 3 Single-Row Themes
     document.querySelectorAll('#ringThemeGroup .pill-btn').forEach(btn => {
@@ -936,19 +950,6 @@
     });
 
     document.getElementById('ringResetBtn').addEventListener('click', () => {
-      startBrainrot();
-      initRingsMode();
-    });
-
-    document.getElementById('ringChaosBtn').addEventListener('click', () => {
-      ['ringMultiply', 'ringGrow', 'ringSpeedUp'].forEach(id => {
-        document.getElementById(id).checked = true;
-      });
-      Object.assign(ringConfig, {
-        multiplyOnEscape: true,
-        growOnBounce: true,
-        speedUp: true
-      });
       startBrainrot();
       initRingsMode();
     });
@@ -976,6 +977,7 @@
       ctx.restore();
     }
 
+    syncAllTogglesButton();
     resizeCanvas();
     requestAnimationFrame(animate);
   </script>
